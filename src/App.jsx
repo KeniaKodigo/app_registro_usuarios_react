@@ -12,6 +12,12 @@ function App() {
 
   const [listaUsuarios, setListaUsuarios] = useState(usuariosLocalstorage ? JSON.parse(usuariosLocalstorage) : [])
 
+  const eliminarUsuario = (id) => {
+    const nuevaLista = usuariosLocalstorage.filter((usuario) => usuario.id !== id);
+    setListaUsuarios(nuevaLista);                                 // para la pantalla
+    localStorage.setItem("usuarios", JSON.stringify(nuevaLista));
+  };
+
   return (
     
     <BrowserRouter>
@@ -23,7 +29,7 @@ function App() {
           {/** declarando la cajita de rutas de la aplicacion */}
           <Routes>
             <Route path="/" element={<Registro listaUsuarios={listaUsuarios} setListaUsuarios={setListaUsuarios} />} />
-            <Route path="/usuarios" element={<ListaUsuarios />} />
+            <Route path="/usuarios" element={<ListaUsuarios listaUsuarios={listaUsuarios} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
